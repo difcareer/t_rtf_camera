@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "com.example.t_rtf_camera"
+        minSdkVersion 17
+        targetSdkVersion 17
+
+        ndk {
+            moduleName "image_process"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        debug {
+
+            externalNativeBuild {
+                ndkBuild {
+                    abiFilters "armeabi"
+                    cFlags "-DNDKLOG"
+                    cppFlags "-std=c++11"
+                }
+            }
+        }
+    }
+
+    externalNativeBuild {
+        externalNativeBuild {
+            ndkBuild {
+                path "src/main/jni/Android.mk"
+            }
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:18.0.0'
+}
